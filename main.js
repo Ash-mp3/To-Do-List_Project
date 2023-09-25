@@ -32,7 +32,7 @@ let currentListItems = currentList.todos
 
 render()
 
-function render(currList, currListItems) {
+function render() {
     
     let listsHtml = '<ul class="userLists" id="sideLists">';
     toDoLists.forEach((elem, index) => {
@@ -48,19 +48,21 @@ function render(currList, currListItems) {
 
     let todosHtml = '<ul class="userTodos">';
 
-    for (let elem of currentListItems) {
+    let listIndex = toDoLists.indexOf(currentList)
+
+    currentListItems.forEach((elem, index) => {
         todosHtml += 
-        `<li class="uTodos">
-            <div class="checkCon"><input type="checkbox"></div>
+        `<li class="uTodos" id="list${listIndex}todo${index}">
+            <div class="checkCon"><input type="checkbox" class="checkB" id="list${listIndex}todo${index}cb"></div>
             ${elem.text}
             <div class="grow"></div>
-            <button class="btn"><i class="fa-solid fa-trash"></i></button>
-            <button class="btn"><i class="fa-solid fa-pen-to-square"></i></i></button>
+            <button class="btn" id="list${listIndex}todo${index}tb"><i class="fa-solid fa-trash"></i></button>
+            <button class="btn" id="list${listIndex}todo${index}eb"><i class="fa-solid fa-pen-to-square"></i></i></button>
         </li>`;
-    };
+    });
     todosHtml += '</ul>';
     document.getElementById('currTodos').innerHTML = todosHtml;
-
+    
 }  
 
 // switch lists
@@ -84,7 +86,7 @@ listInput.addEventListener('keypress', function(e) {
                     todos: [] 
                 }
             )
-            
+            listInput.value = '';
         } 
         render()
 });
@@ -100,8 +102,28 @@ listItemInput.addEventListener('keypress', function(e) {
             currentListItems.push(
             {text: `${listItemName}`, completed: false}
             )
-            
+            listItemInput.value = '';
         } 
         render()
 });
 
+// mark as complete
+
+let currCheckBoxs = document.querySelectorAll('#currTodos .checkB')
+
+currCheckBoxs.forEach((elem, index) => {
+    elem.addEventListener('change', function() {
+        markComplete(elem, index)
+    })
+})
+
+function markComplete(elem, index) {
+    let checkValue = currentListItems[index]
+    if (checkValue.completed) {
+        let f = false
+    }  
+    else if (!checkValue.completed) {
+        currentListItems[index].completed = true;
+    }
+    return currentListItems[index].completed
+}
