@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="styles/app.css">
     <script src="https://kit.fontawesome.com/1f99839674.js" crossorigin="anonymous"></script>
     <script defer src="main.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>TO DO LIST</title>
 </head>
 <body>
@@ -18,20 +19,20 @@
         <div class="bodyDiv flex h-full">
             <div class="listNav w-1/4 p-4 bg-black/25">
                 <form id="listForm">
-                    <input id="listInput" placeholder="Name Your List..." class="w-full h-16 px-5 mb-4 outline-none bg-white">
+                    <input id="listInput" placeholder="Name Your List..." class="w-full h-16 px-5 mb-4 outline-none bg-white rounded">
                 </form>
                 <div id="listsCon">
-                    
+
                 </div>
             </div>
             <div id="listBody" class="w-3/4 bg-black/5">
                 <h1 id="currName"></h1>
                 <hr>
                 <div id="currTodos">
-                    <div id="addItem" class="h-5 bg-red">
-                        
-                        <input type="text">
-                    </div>
+                    <label for=""></label>
+                </div>
+                <div id="addItemDiv" class="w-full">
+                    <input type="search" placeholder="Add New Item..." id="addItem" class="newTodo w-full outline-none placeholder-gray-800 ">
                 </div>
             </div>
         </div>
