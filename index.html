@@ -10,27 +10,30 @@
     <title>TO DO LIST</title>
 </head>
 <body>
-    <div class="mainDiv h-full bg-gray-400">
-        <nav class="flex justify-between items-center h-20 px-10 bg-black/50 text-white text-3xl">
+    <div class="mainDiv h-screen bg-gray-400 flex flex-col">
+        <nav class="flex justify-between items-center  px-10 text-white/75 text-3xl">
             <i class="fa-regular fa-user"></i>
             <h3>TO-DO-LIST</h3>
             <i class="fa-solid fa-gear"></i>
         </nav>
-        <div class="bodyDiv flex h-full">
-            <div class="listNav w-1/4 p-4 bg-black/25">
-                <input id="listInput"  placeholder="Name Your List..." class="w-full h-16 px-5 mb-4 outline-none bg-white rounded">
-                <div id="listsCon">
+        <div class="bodyDiv flex flex-grow h-auto">
+            <div class="listNav w-1/4 flex flex-col">
+                <input id="listInput"  placeholder="Name New List..." class=" m-5 h-16 p-5 outline-none bg-white/75 rounded">
+                <hr>
+                <div class="listScrollCon">
+                    <div id="listsCon">
 
+                    </div>
                 </div>
             </div>
             <div id="listBody" class="w-3/4 bg-black/5">
                 <h1 id="currName"></h1>
                 <hr>
                 <div id="currTodos">
-                    <label for=""></label>
+                    
                 </div>
                 <div id="addItemDiv" class="w-full">
-                    <input placeholder="Add New Item..." id="addItem" class="newTodo w-full outline-none placeholder-gray-800 ">
+                    <input placeholder="Add Todos Here..." id="addItem" class="newTodo w-full outline-none placeholder-gray-800 ">
                 </div>
             </div>
         </div>

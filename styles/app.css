@@ -534,8 +534,8 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.mb-4 {
-  margin-bottom: 1rem;
+.m-5 {
+  margin: 1.25rem;
 }
 
 .flex {
@@ -546,12 +546,12 @@ video {
   height: 4rem;
 }
 
-.h-20 {
-  height: 5rem;
+.h-auto {
+  height: auto;
 }
 
-.h-full {
-  height: 100%;
+.h-screen {
+  height: 100vh;
 }
 
 .w-1\/4 {
@@ -566,8 +566,16 @@ video {
   width: 100%;
 }
 
+.flex-grow {
+  flex-grow: 1;
+}
+
 .grow {
   flex-grow: 1;
+}
+
+.flex-col {
+  flex-direction: column;
 }
 
 .items-center {
@@ -582,16 +590,8 @@ video {
   border-radius: 0.25rem;
 }
 
-.bg-black\/25 {
-  background-color: rgb(0 0 0 / 0.25);
-}
-
 .bg-black\/5 {
   background-color: rgb(0 0 0 / 0.05);
-}
-
-.bg-black\/50 {
-  background-color: rgb(0 0 0 / 0.5);
 }
 
 .bg-gray-400 {
@@ -599,13 +599,12 @@ video {
   background-color: rgb(156 163 175 / var(--tw-bg-opacity));
 }
 
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+.bg-white\/75 {
+  background-color: rgb(255 255 255 / 0.75);
 }
 
-.p-4 {
-  padding: 1rem;
+.p-5 {
+  padding: 1.25rem;
 }
 
 .px-10 {
@@ -613,19 +612,13 @@ video {
   padding-right: 2.5rem;
 }
 
-.px-5 {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-}
-
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
 }
 
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+.text-white\/75 {
+  color: rgb(255 255 255 / 0.75);
 }
 
 .placeholder-gray-800::-moz-placeholder {
@@ -650,45 +643,140 @@ video {
 }
 
 html, body {
+  min-height: 700px;
+  min-width: 1000px;
+}
+
+.mainDiv {
+  position: relative;
+}
+
+/* nav */
+
+nav {
+  background-color: #232323;
+  width: 100%;
+  min-height: 85px;
+  position: fixed;
+  z-index: 1;
+}
+
+nav > i{
+  color: #69369E;
+}
+
+nav > i:hover {
+  color: #7951A8;
+}
+
+.bodyDiv {
+  padding-top: 85px;
+}
+
+/* lists on the left */
+
+.listNav {
+  background-color: #656565;
+  height: 100%;
+  max-height: 100%;
+  overflow-x: hidden;
+}
+
+.listNav hr {
+  height: 2px;
+  width: 100%;
+  background-color: black;
+}
+
+.listScrollCon {
+  max-height: 70vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 10px 0 ;
+}
+
+#listsCon {
+  padding: 0 20px;
   height: 100%;
 }
 
 .uLists {
-  background-color: (0 0 0 / 0.25);
-  border-bottom: .5px solid black;
-  height: 60px;
+  border-bottom: 1.5px solid black;
+  min-height: 60px;
+  max-height: auto;
   font-size: 2em;
   text-align: center;
+  overflow-wrap: break-word;
   position: relative;
   top: 0;
   transition: top ease .3s;
+  list-style-type: none;
 }
 
 .uLists:hover {
   top: -5px;
   background-color: #7951A8;
   box-shadow: 0 5px 10px black;
-  border-radius: 5px;
+  border-radius: 7px;
 }
+
+/* current list */
 
 #listBody {
   padding: 20px 50px;
+  background-color: #989898;
+  height: 100%;
+  max-height: 100%;
 }
 
 h1 {
   font-size: 4em;
+  overflow-wrap: break-word;
 }
 
-hr {
+#firstListName, #H1ei{
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-radius: .25rem .25rem 0 0;
+  background-color: inherit;
+  /* border: 2px solid white; */
+  border-bottom: none;
+  width: 100%;
+}
+
+#firstListName::-moz-placeholder, #H1ei::-moz-placeholder {
+  color: #656565;
+}
+
+#firstListName::placeholder, #H1ei::placeholder {
+  color: #656565;
+}
+
+#listBody hr {
   height: 2px;
   width: 100%;
   background-color: black;
+  margin-bottom: 15px;
+}
+
+#currTodos {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-color: red;
+  max-height: 50vh;
+  border-top: 2px solid black;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+}
+
+h2 {
+  font-size: 2em;
+  text-align: center;
+  padding: 20px;
 }
 
 .userTodos {
-  height: auto;
-  margin-top: 15px;
-  border: 2px solid black;
+  max-height: 100%;
   border-bottom: none;
 }
 
@@ -720,11 +808,29 @@ hr {
 
 .uTodos > button {
   padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.uTodos > button i {
+  position: relative;
+  top: 0;
+  transition: top ease .3s;
+}
+
+.uTodos > button i:hover {
+  color: crimson;
+  top: -3px;
+}
+
+.uTodos > button:last-child i:hover {
+  color: green;
 }
 
 .newTodo {
   font-size: 1.9em;
   padding: 20px 20px;
   border: 2px solid black;
-  background-color: #656565;
+  background-color: #7951A8;
+  border-radius: 0 0 10px 10px;
 }
