@@ -534,6 +534,14 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
 .m-5 {
   margin: 1.25rem;
 }
@@ -586,21 +594,24 @@ video {
   justify-content: space-between;
 }
 
+.gap-1 {
+  gap: 0.25rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
 .rounded {
   border-radius: 0.25rem;
 }
 
-.bg-black\/5 {
-  background-color: rgb(0 0 0 / 0.05);
-}
-
-.bg-gray-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
-}
-
 .bg-white\/75 {
   background-color: rgb(255 255 255 / 0.75);
+}
+
+.p-1 {
+  padding: 0.25rem;
 }
 
 .p-5 {
@@ -615,6 +626,11 @@ video {
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .text-white\/75 {
@@ -644,7 +660,16 @@ video {
 
 html, body {
   min-height: 700px;
+  height: 100%;
   min-width: 1000px;
+  width: 100%;
+  position: relative;
+}
+
+body img {
+  position: absolute;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .mainDiv {
@@ -671,6 +696,7 @@ nav > i:hover {
 
 .bodyDiv {
   padding-top: 85px;
+  background-image: url('images/bg-img.webp');
 }
 
 /* lists on the left */
@@ -724,14 +750,23 @@ nav > i:hover {
 
 #listBody {
   padding: 20px 50px;
-  background-color: #989898;
   height: 100%;
   max-height: 100%;
+  background-color: #989898;
+}
+
+.currNameDiv {
+  width: 100%;
+}
+
+summary::marker {
+  content: none;
 }
 
 h1 {
   font-size: 4em;
   overflow-wrap: break-word;
+  width: auto;
 }
 
 #firstListName, #H1ei{
@@ -741,7 +776,8 @@ h1 {
   background-color: inherit;
   /* border: 2px solid white; */
   border-bottom: none;
-  width: 100%;
+  width: auto;
+  color: #262626;
 }
 
 #firstListName::-moz-placeholder, #H1ei::-moz-placeholder {
@@ -750,6 +786,31 @@ h1 {
 
 #firstListName::placeholder, #H1ei::placeholder {
   color: #656565;
+}
+
+.currNameDiv details {
+  text-align: center;
+  width: 60px;
+}
+
+.currNameDiv summary:hover {
+  color: #656565;
+}
+
+.currNameDiv ul {
+  background-color: #7951A8;
+  width: 180px;
+  right: 60px;
+  top: -35px;
+  padding: 7px 10px;
+  border: 2px solid black;
+  border-radius: 15px;
+  box-shadow: 0 10px 15px -5px black;
+}
+
+.currNameDiv ul li:hover {
+  background-color: #69369E;
+  border-radius: 10px;
 }
 
 #listBody hr {
@@ -777,14 +838,17 @@ h2 {
 
 .userTodos {
   max-height: 100%;
-  border-bottom: none;
 }
 
 .uTodos {
-  border-bottom: 2px solid black;
   padding: 20px 20px;
   font-size: 1.9em;
   display: flex;
+  border-top: 2px solid black;
+}
+
+.uTodos:first-child {
+  border-top: none;
 }
 
 .uTodos:last-child {
@@ -804,6 +868,21 @@ h2 {
   transform: scale(2,2);
   height: -moz-min-content;
   height: min-content;
+}
+
+.listItemInput {
+  background-color: inherit;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  color: #262626;
+}
+
+.listItemInput::-moz-placeholder {
+  color: #656565;
+}
+
+.listItemInput::placeholder {
+  color: #656565;
 }
 
 .uTodos > button {
@@ -831,6 +910,7 @@ h2 {
   font-size: 1.9em;
   padding: 20px 20px;
   border: 2px solid black;
+  border-top: none;
   background-color: #7951A8;
   border-radius: 0 0 10px 10px;
 }

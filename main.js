@@ -1,8 +1,8 @@
-// data structure 
-
 'use strict';
 
-let toDoLists = [
+// data structure 
+
+let toDoLists = JSON.parse(localStorage.getItem('toDoLists'))  ?? [
     {
         name: 'Name Your First List!',
         todos: [
@@ -10,59 +10,60 @@ let toDoLists = [
     }
 ]
 
-let currentList = toDoLists[0];
-let currentListItems = currentList.todos;
-let reverseTodos = toDoLists.reverse();
+let currentList = JSON.parse(localStorage.getItem('currentList'))  ?? toDoLists[0];
+let currentListItems = currentList.todos ?? '';
 let listIndex;
 
 /// render
 
 function render() {
-// creating and diplaying the lists 
+    // creating and diplaying the lists 
     let listsHtml = '<ul class="userLists" id="sideLists">';
     let InnerListsHtml = '';
-    reverseTodos.forEach((elem, index) => {
+    toDoLists.forEach((elem, index) => {
         InnerListsHtml += `<li id="list${index}" class="uLists">${elem.name}</li>`;
     });
     listsHtml = listsHtml + InnerListsHtml + '</ul>';
     document.getElementById('listsCon').innerHTML = listsHtml;
-// adding an onclick to the lists so they can be switched 
+    // adding an onclick to the lists so they can be switched 
     let liVals = Object.values(document.querySelectorAll('.userLists li'))
     liVals.forEach((value, index) => value.setAttribute('onclick', `switchList(${index})`))
-// changing the h1 tag to the current list name
-if (toDoLists[0].name === 'Name Your First List!') {
-    document.getElementById('currName').innerHTML = `<input type="text" id="firstListName" placeholder="Name Your First List Here!">`
-    document.getElementById('firstListName').focus()
-} else if (toDoLists[0].name !== 'Name Your First List!'){
-    document.getElementById('currName').innerText = currentList.name
-}
-// creating and diplaying the current list items
+    // changing the h1 tag to the current list name
+    if (toDoLists[0].name === 'Name Your First List!') {
+        document.getElementById('currName').innerHTML = `<input type="text" id="firstListName" placeholder="Name Your First List!">`
+        document.getElementById('firstListName').focus()
+    } else if (toDoLists[0].name !== 'Name Your First List!'){
+        document.getElementById('currName').innerText = currentList.name
+    }
+    // creating and diplaying the current list items
     let todosHtml = '<ul class="userTodos">';
     listIndex = toDoLists.indexOf(currentList)
     currentListItems.forEach((elem, index) => {
         todosHtml += 
         `<li class="uTodos" id="list${listIndex}todo${index}">
-            <div class="checkCon"><input type="checkbox" class="checkB" id="list${listIndex}todo${index}cb"></div>
-            <span id="list${listIndex}todo${index}span">${elem.text}</span>
+            <div class="checkCon"><input type="checkbox" class="checkB" id="list${listIndex}todo${index}cb" onclick="markComplete(${listIndex},${index})" ></div>
+            
+            <span id="list${listIndex}todo${index}span" onclick="editItem(${index})">${elem.text}</span>
             <div class="grow"></div>
             <button class="btn" id="list${listIndex}todo${index}tb" onclick="deleteList(${index})"><i class="fa-solid fa-trash"></i></button>
             <button class="btn" id="list${listIndex}todo${index}eb" onclick="editItem(${index})"><i class="fa-solid fa-pen-to-square"></i></i></button>
         </li>`;
+        
     });
     todosHtml += '</ul>';
     document.getElementById('currTodos').innerHTML = todosHtml;
-// saving to localStorage
-    // save(toDoLists, currentList, currentListItems)
-    // console.log('render')
+    // render checkboxs
+    currentListItems.forEach((elem, index) => {
+        let completed = elem.completed 
+        document.getElementById(`list${listIndex}todo${index}cb`).checked = completed;
+    });
 }  
-
 render()
 
 /// save
-function save(lists, currList, currListItems) {
-    localStorage.setItem('lists', JSON.stringify(lists));
-    localStorage.setItem('currList', JSON.stringify(currList));
-    localStorage.setItem('currListItems', JSON.stringify(currListItems));
+function save(lists, currList) {
+    localStorage.setItem('toDoLists', JSON.stringify(toDoLists));
+    localStorage.setItem('currentList', JSON.stringify(currentList));
 }
 
 /// switch lists
@@ -75,6 +76,7 @@ function switchList(index) {
     } else if(toDoLists[0].name === 'Name Your First List!') {
         document.getElementById('firstListName').placeholder = 'Name Your List First!'
     } 
+    save(toDoLists, currentList)
 };
 
 /// submit new list
@@ -96,6 +98,7 @@ listInput.addEventListener('keypress', function(e) {
     if(e.key === 'Enter'&& toDoLists[0].name === 'Name Your First List!') {
         document.getElementById('firstListName').placeholder = 'Name Your List First!'
     } 
+    save(toDoLists, currentList)
 });
 
 /// submit new list item
@@ -114,34 +117,31 @@ listItemInput.addEventListener('keypress', function(e) {
     if(e.key === 'Enter'&& toDoLists[0].name === 'Name Your First List!') {
         document.getElementById('firstListName').placeholder = 'Name Your List First!'
     }
+    save(toDoLists, currentList)
 });
 
 /// delete list item 
 
 function deleteList(index) {
-    delete currentListItems[index]
+    currentListItems.splice(index, 1)
     render()
+    save(toDoLists, currentList)
 }
 
 /// mark as complete
 
-let currCheckBoxs = document.querySelectorAll('#currTodos .checkB')
-
-currCheckBoxs.forEach((elem, index) => {
-    elem.addEventListener('change', function() {
-        markComplete(elem, index)
-    })
-})
-
-function markComplete(elem, index) {
+function markComplete(listIndex, index) {
     let checkValue = currentListItems[index]
+    console.log(listIndex,index)
     if (checkValue.completed) {
         currentListItems[index].completed = false;
     }  
     else if (!checkValue.completed) {
         currentListItems[index].completed = true;
     }
-    return currentListItems[index].completed
+    
+    render()
+    save(toDoLists, currentList)
 }
 
 /// edit to do list item
@@ -149,8 +149,9 @@ function markComplete(elem, index) {
 function editItem(index) {
     let oldName = document.querySelector(`#list${listIndex}todo${index}span`);
     let oldText = oldName.innerText
-    let inputTD = `<input type="text" placeholder="${oldText}" id="list${listIndex}todo${index}ei">`
+    let inputTD = `<input type="text" placeholder="${oldText}" id="list${listIndex}todo${index}ei" class="listItemInput">`
     oldName.innerHTML = inputTD
+    document.getElementById(`list${listIndex}todo${index}ei`).focus()
 
     let newText = document.querySelector(`#list${listIndex}todo${index}ei`);
     newText.addEventListener('keypress', function(e) {
@@ -158,22 +159,12 @@ function editItem(index) {
             oldName.innerHTML = newText.value;
         }
     })
+    save(toDoLists, currentList)
 }
 
 /// edit list name 
 
-let firstListNameH1 = document.querySelector('#firstListName')
-firstListNameH1.addEventListener('keypress', function(e) {
-    if(e.key === 'Enter') {
-        document.getElementById('currName').innerHTML = firstListNameH1.value;
-        currentList.name = firstListNameH1.value;
-        render()
-    }
-})
-
-/// edit first list 
-
-let currName = document.getElementById('currName');
+let currName = document.getElementById('currName')
 currName.addEventListener('click', function() {
     if(toDoLists[0].name !== 'Name Your First List!') {
         let currText = currName.innerText;
@@ -189,4 +180,20 @@ currName.addEventListener('click', function() {
             }
         })
     }
+    save(toDoLists, currentList)
 })
+
+/// edit first list 
+
+let firstListNameH1 = document.querySelector('#firstListName')
+if (firstListNameH1) {
+    firstListNameH1.addEventListener('keypress', function(e) {
+    if(e.key === 'Enter') {
+        document.getElementById('currName').innerHTML = firstListNameH1.value;
+        currentList.name = firstListNameH1.value;
+        render()
+    }
+    save(toDoLists, currentList)
+})
+}
+

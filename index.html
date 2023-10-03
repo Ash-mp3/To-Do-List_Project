@@ -10,7 +10,8 @@
     <title>TO DO LIST</title>
 </head>
 <body>
-    <div class="mainDiv h-screen bg-gray-400 flex flex-col">
+    <!-- <img src="images/bg-img.webp" alt="background room"> -->
+    <div class="mainDiv h-screen flex flex-col">
         <nav class="flex justify-between items-center  px-10 text-white/75 text-3xl">
             <i class="fa-regular fa-user"></i>
             <h3>TO-DO-LIST</h3>
@@ -26,8 +27,18 @@
                     </div>
                 </div>
             </div>
-            <div id="listBody" class="w-3/4 bg-black/5">
-                <h1 id="currName"></h1>
+            <div id="listBody" class="w-3/4 ">
+                <div class="currNameDiv flex items-center ">
+                    <h1 id="currName"></h1>
+                    <div class="grow"></div>
+                    <details class="dropdown relative">
+                        <summary class="btn"><i class="fa-solid fa-ellipsis-vertical text-4xl"></i></summary>
+                        <ul class="dropdown-content absolute flex flex-col gap-1">
+                            <li class="flex gap-2 items-center p-1"><i class="fa-solid fa-magnifying-glass"></i>search</li>
+                            <li class="flex gap-2 items-center p-1"><i class="fa-solid fa-eye-slash"></i>Hidden Content</li>
+                        </ul>
+                    </details>
+                </div>
                 <hr>
                 <div id="currTodos">
                     
