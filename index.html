@@ -10,7 +10,6 @@
     <title>TO DO LIST</title>
 </head>
 <body>
-    <!-- <img src="images/bg-img.webp" alt="background room"> -->
     <div class="mainDiv h-screen flex flex-col">
         <nav class="flex justify-between items-center  px-10 text-white/75 text-3xl">
             <i class="fa-regular fa-user"></i>
@@ -31,11 +30,18 @@
                 <div class="currNameDiv flex items-center ">
                     <h1 id="currName"></h1>
                     <div class="grow"></div>
-                    <details class="dropdown relative">
+        
+                    <details class="dropdown relative" id="search">
+                        <summary class="btn"><i class="fa-solid fa-magnifying-glass"></i></summary>
+                        <div class="dropdown-content absolute flex">
+                            <input type="text" placeholder="Search..." class=" outline-none placeholder-gray-400 bg-white/75">
+                        </div>
+                    </details>
+                    <details class="dropdown relative" id="options" >
                         <summary class="btn"><i class="fa-solid fa-ellipsis-vertical text-4xl"></i></summary>
                         <ul class="dropdown-content absolute flex flex-col gap-1">
-                            <li class="flex gap-2 items-center p-1"><i class="fa-solid fa-magnifying-glass"></i>search</li>
-                            <li class="flex gap-2 items-center p-1"><i class="fa-solid fa-eye-slash"></i>Hidden Content</li>
+                            <li id="deleteList" class="flex gap-2 items-center p-1"><i class="fa-solid fa-trash"></i></i>Delete List</li>
+                            <li class="flex gap-2 items-center p-1"><i class="fa-solid fa-eye-slash"></i>Hidden Items</li>
                         </ul>
                     </details>
                 </div>
@@ -43,8 +49,9 @@
                 <div id="currTodos">
                     
                 </div>
-                <div id="addItemDiv" class="w-full">
+                <div id="addItemDiv" class="w-full flex">
                     <input placeholder="Add Todos Here..." id="addItem" class="newTodo w-full outline-none placeholder-gray-800 ">
+                    <button id="clearBtn" onclick="clearComplete()">Clear Completed</button>
                 </div>
             </div>
         </div>
