@@ -10,7 +10,6 @@ let toDoLists = JSON.parse(localStorage.getItem('toDoLists'))  ?? [
     }
 ]
 
-let hiddenLists = []
 let currentList = JSON.parse(localStorage.getItem('currentList'))  ?? toDoLists[0];
 let currentListItems = currentList.todos ?? [];
 let listIndex;
@@ -23,7 +22,7 @@ function render() {
     let InnerListsHtml = '';
     if(toDoLists.length > 1 || currentList.name !== '<- Name your list!') {
         toDoLists.forEach((elem, index) => {
-            InnerListsHtml += `<li id="list${index}" class="uLists">${elem.name}</li>`;
+            InnerListsHtml += `<li id="list${index}" class="uLists" draggable="true">${elem.name}</li>`;
         });
     }
     listsHtml += InnerListsHtml + '</ul>';
@@ -50,7 +49,7 @@ function render() {
             <span id="list${listIndex}todo${index}span" onclick="editItem(${index})">${elem.text}</span>
             <div class="grow"></div>
             <button class="btn" id="list${listIndex}todo${index}tb" onclick="deleteItem(${index})"><i class="fa-solid fa-trash"></i></button>
-            <button class="btn" id="list${listIndex}todo${index}hb" onclick="hide(${index})"><i class="fa-solid fa-eye-slash"></i></button>
+            <button class="btn" id="list${listIndex}todo${index}hb" onclick="editItem(${index})"><i class="fa-solid fa-pen-to-square"></i></button>
         </li>`;
         
     });
@@ -64,7 +63,6 @@ function render() {
     // show whitch list is being displayed
     if (currentList.name !== '<- Name your list!') {
         let currListBar = document.getElementById(`list${listIndex}`);
-        console.log(listIndex)
         currListBar.setAttribute('class', 'selectedList')
     }  
 }
@@ -108,9 +106,6 @@ listInput.addEventListener('keypress', function(e) {
         save(toDoLists, currentList)
         render()
     } 
-
-        
-
 });
 
 /// delete list 
@@ -166,7 +161,6 @@ currName.addEventListener('click', function() {
 /// switch current list
 
 function switchList(index) {
-    console.log(index)
     currentList = toDoLists[index]
     currentListItems = currentList.todos
     render()
@@ -219,26 +213,6 @@ function editItem(index) {
     
 }
 
-/// hide list item
-
-function hide(index) {
-    let hideItem = document.getElementById(`list${listIndex}todo${index}hb`);
-    let currItemsStat = toDoLists[listIndex].todos[index].hidden
-    if (!currItemsStat) {
-        currItemsStat = true;
-    } else if (currItemsStat) {
-        currItemsStat = false;
-    }
-    
-    console.log(toDoLists[listIndex].todos[index].hidden)
-    render()
-    save(toDoLists, currentList)
-}
-
-/// show hidden list items
-
-
-
 /// mark as complete
 
 function markComplete(listIndex, index) {
@@ -271,8 +245,39 @@ function clearComplete() {
 
 /// search todos
 
+let searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('keypress', function(e) {
+    if(e.key === "Enter") {
+        let itemsArr = Object.values(document.querySelectorAll('.uTodos'))
+        let count = 0;
+        itemsArr.forEach((elem, index) => {
+            let regex = new RegExp(`${searchInput.value}`, 'i')
+            let currItem = document.getElementById(`list${listIndex}todo${index}`)
+            if(regex.test(elem.innerText)) {
+                if(count < 3) {
+                    currItem.setAttribute('class', 'searchedItem uTodos')
+                    if( count === 0) {
+                        currItem.scrollIntoView();
+                    }
+                    setTimeout(() => {
+                        currItem.removeAttribute('class', 'searchedItem')
+                        currItem.setAttribute('class', 'uTodos')
+                    }, 3000)
+                    count += 1;
+                }
+            }
+        })
+        searchInput.value = '';
+    }
+})
 
+/// make search go away
 
+document.addEventListener('click', (event) => {
+    if (event.target !== document.getElementById('search') && !event.target.closest('#search')) {
+        document.getElementById('search').removeAttribute('open')
+    }
+})
 
 /// Animations
 

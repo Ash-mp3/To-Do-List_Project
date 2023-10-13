@@ -10,7 +10,7 @@
     <title>TO DO LIST</title>
 </head>
 <body>
-    <div class="mainDiv h-screen flex flex-col">
+    <div class="mainDiv h-full flex flex-col">
         <nav class="flex justify-between items-center  px-10 text-white/75 text-3xl">
             <i class="fa-regular fa-user"></i>
             <h3>TO-DO-LIST</h3>
@@ -20,7 +20,7 @@
             <div class="listNav w-1/4 flex flex-col">
                 <input id="listInput"  placeholder="Name New List..." class=" m-5 h-16 p-5 outline-none bg-white/75 rounded">
                 <hr>
-                <div class="listScrollCon">
+                <div class="listScrollCon ">
                     <div id="listsCon">
 
                     </div>
@@ -33,17 +33,11 @@
         
                     <details class="dropdown relative" id="search">
                         <summary class="btn"><i class="fa-solid fa-magnifying-glass"></i></summary>
-                        <div class="dropdown-content absolute flex">
-                            <input type="text" placeholder="Search..." class=" outline-none placeholder-gray-400 bg-white/75">
+                        <div class=" dropdown-content absolute flex">
+                            <input id="searchInput" type="text" placeholder="Search..." class=" outline-none placeholder-gray-400 bg-white/75">
                         </div>
                     </details>
-                    <details class="dropdown relative" id="options" >
-                        <summary class="btn"><i class="fa-solid fa-ellipsis-vertical text-4xl"></i></summary>
-                        <ul class="dropdown-content absolute flex flex-col gap-1">
-                            <li id="deleteList" class="flex gap-2 items-center p-1"><i class="fa-solid fa-trash"></i></i>Delete List</li>
-                            <li class="flex gap-2 items-center p-1"><i class="fa-solid fa-eye-slash"></i>Hidden Items</li>
-                        </ul>
-                    </details>
+                    <i id="deleteList" class="fa-solid fa-trash"></i>
                 </div>
                 <hr>
                 <div id="currTodos">
