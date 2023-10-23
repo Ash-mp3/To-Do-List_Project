@@ -684,7 +684,6 @@ nav > i:hover {
 
 .bodyDiv {
   padding-top: 85px;
-  background-image: url('images/bg-img.webp');
 }
 
 /* lists on the left */
@@ -723,11 +722,6 @@ nav > i:hover {
   height: 100%;
 }
 
-.userLists {
-  display: flex;
-  flex-direction: column-reverse;
-}
-
 .selectedList {
   color: #441f4a;
 }
@@ -753,6 +747,10 @@ nav > i:hover {
   border-radius: 7px;
   z-index: 1;
   border: 1px solid black;
+}
+
+.dragging {
+  background-color: purple;
 }
 
 /* current list */

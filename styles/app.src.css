@@ -37,7 +37,6 @@ nav > i:hover {
 
 .bodyDiv {
     padding-top: 85px;
-    background-image: url('images/bg-img.webp');
 }
 
 /* lists on the left */
@@ -79,10 +78,6 @@ nav > i:hover {
 
 }
 
-.userLists {
-    display: flex;
-    flex-direction: column-reverse;
-}
 
 .selectedList {
     color: #441f4a;
@@ -100,7 +95,6 @@ nav > i:hover {
     top: 0;
     transition: top ease .3s;
     list-style-type: none;
-    
 }
 
 .uLists:hover, .selectedList:hover {
@@ -112,6 +106,9 @@ nav > i:hover {
     border: 1px solid black;
 }
 
+.dragging {
+    background-color: purple;
+}
 
 /* current list */
 

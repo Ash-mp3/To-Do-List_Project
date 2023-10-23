@@ -22,13 +22,11 @@ function render() {
     let InnerListsHtml = '';
     if(toDoLists.length > 1 || currentList.name !== '<- Name your list!') {
         toDoLists.forEach((elem, index) => {
-            InnerListsHtml += `<li id="list${index}" class="uLists" draggable="true">${elem.name}</li>`;
+            InnerListsHtml += `<li id="list${index}" class="uLists draggable" draggable="true">${elem.name}</li>`;
         });
     }
     listsHtml += InnerListsHtml + '</ul>';
     document.getElementById('listsCon').innerHTML = listsHtml;
-    
-
     // adding an onclick to the lists so they can be switched 
     let liVals = Object.values(document.querySelectorAll('.userLists li'))
     liVals.forEach((value, index) => value.setAttribute('onclick', `switchList(${index})`))
@@ -36,12 +34,10 @@ function render() {
     document.getElementById('currName').innerText = currentList.name
     // creating and diplaying the current list items
     let todosHtml = '<ul class="userTodos">';
-
     listIndex = toDoLists.indexOf(currentList)
     if(listIndex === -1) {
         listIndex = toDoLists.length -1
     }
-   
     currentListItems.forEach((elem, index) => {
         todosHtml += 
         `<li class="uTodos" id="list${listIndex}todo${index}">
@@ -51,7 +47,6 @@ function render() {
             <button class="btn" id="list${listIndex}todo${index}tb" onclick="deleteItem(${index})"><i class="fa-solid fa-trash"></i></button>
             <button class="btn" id="list${listIndex}todo${index}hb" onclick="editItem(${index})"><i class="fa-solid fa-pen-to-square"></i></button>
         </li>`;
-        
     });
     todosHtml += '</ul>';
     document.getElementById('currTodos').innerHTML = todosHtml;
@@ -75,12 +70,6 @@ function save(lists, currList) {
     localStorage.setItem('currentList', JSON.stringify(currentList));
 }
 
-/// save hidden lists
-
-function saveHidden() {
-    localStorage.setItem('', JSON.stringify())
-}
-
 /// submit new list
 
 let listInput = document.getElementById('listInput');
@@ -92,10 +81,8 @@ listInput.addEventListener('keypress', function(e) {
             todos: [] 
         })
         listInput.value = '';
-
         save(toDoLists, currentList)
         render()
-
         let newIndex = toDoLists.length -1;
         switchList(newIndex)
     } 
@@ -115,9 +102,7 @@ document.getElementById('deleteList').addEventListener('click', () => {
 })
 
 function deleteList() {
-   
     if(toDoLists.length === 1 ) {
-        console.log('it worked')
         let empty = {name: '<- Name your list!',todos: []}
         toDoLists.splice(listIndex , 1, empty);
         currentList = toDoLists[0];
@@ -126,10 +111,8 @@ function deleteList() {
     } else {
         toDoLists.splice(listIndex, 1);
         currentList = toDoLists[listIndex -1] ?? toDoLists[0];
-        console.log(currentList)
         currentListItems = currentList.todos
     }
-     
     save(toDoLists, currentList)
     render();
 }
@@ -155,7 +138,6 @@ currName.addEventListener('click', function() {
             }
         })
     }
-    
 })
 
 /// switch current list
@@ -181,7 +163,7 @@ listItemInput.addEventListener('keypress', function(e) {
             render()
         } 
     if(e.key === 'Enter'&& toDoLists[0].name === '<- Name your list!') {
-        document.getElementById('firstListName').placeholder = 'Name Your List First!'
+        document.getElementById('currName').innerText = '<- Name required!'
     }
     save(toDoLists, currentList)
 });
@@ -223,7 +205,6 @@ function markComplete(listIndex, index) {
     else if (!checkValue.completed) {
         currentListItems[index].completed = true;
     }
-    
     render()
     save(toDoLists, currentList)
 }
@@ -233,9 +214,7 @@ function markComplete(listIndex, index) {
 function clearComplete() {
     for (let i = currentListItems.length -1; i >= 0; i--) {
         let theItem = currentListItems[i];
-        console.log(i.completed)
         if (theItem.completed) {
-            console.log(theItem)
             currentListItems.splice(i, 1) 
         } 
     }
@@ -278,8 +257,3 @@ document.addEventListener('click', (event) => {
         document.getElementById('search').removeAttribute('open')
     }
 })
-
-/// Animations
-
-
-
